@@ -14,14 +14,17 @@ import {
   View,
   Text,
   StatusBar,
+  Button,
 } from 'react-native';
 
 import Header from './components/Header';
+import StartGameScreen from './screens/StartGameScreen';
 
 const App: () => React$Node = () => {
   return (
     <View styles={styles.screen}>
       <Header title="Guess A Number" />
+      <StartGameScreen />
     </View>
   );
 };
