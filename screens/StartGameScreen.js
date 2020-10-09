@@ -1,34 +1,55 @@
-import React from 'react';
-import {View, Button, Text, StyleSheet, TextInput} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Button,
+  Text,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
+
 import Card from '../components/Card';
 import Colors from '../constants/Colors';
 import Input from '../components/Input';
 
 const StartGameScreen = (props) => {
-  return (
-    <View style={styles.screen}>
-      <Text style={styles.title}>Start a New Game</Text>
-      <Card style={styles.inputContainer}>
-        <Text>Select a Number</Text>
-        <Input
-          style={styles.input}
-          blurOnSubmit
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="number-pad"
-          maxLength={2}
-        />
+  const [enteredValue, setEnteredValue] = useState();
 
-        <View style={styles.buttonContainer}>
-          <View style={styles.button}>
-            <Button title="Reset" color={Colors.accent} />
+  const enteredValueHandler = (inputValue) => {
+    setEnteredValue(inputValue.replace(/[^0-9]/g, ''));
+  };
+
+  return (
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}>
+      <View style={styles.screen}>
+        <Text style={styles.title}>Start a New Game</Text>
+        <Card style={styles.inputContainer}>
+          <Text>Select a Number</Text>
+          <Input
+            style={styles.input}
+            blurOnSubmit
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="number-pad"
+            maxLength={2}
+            onChangeText={enteredValueHandler}
+            value={enteredValue}
+          />
+
+          <View style={styles.buttonContainer}>
+            <View style={styles.button}>
+              <Button title="Reset" color={Colors.accent} />
+            </View>
+            <View style={styles.button}>
+              <Button title="Confirm" color={Colors.primary} />
+            </View>
           </View>
-          <View style={styles.button}>
-            <Button title="Confirm" color={Colors.primary} />
-          </View>
-        </View>
-      </Card>
-    </View>
+        </Card>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
