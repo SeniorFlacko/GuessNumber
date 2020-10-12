@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, Button, Text} from 'react-native';
+import React, {useState, useRef, useEffect} from 'react';
+import {View, StyleSheet, Button, Text, Alert} from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 
@@ -20,6 +20,49 @@ const GameScreen = (props) => {
   const [currentGuess, setCurrentGuess] = useState(
     generateRandomBetween(1, 100, props.userChoice),
   );
+
+  const [rounds, setRounds] = useState(0);
+
+  const currentLow = useRef(1);
+  const currentHigh = useRef(100);
+
+  const {userChoice, onGameOver} = props;
+
+  useEffect(() => {
+    if (currentGuess == props.userChoice) {
+      props.onGameOver(rounds);
+      setRounds(0);
+    }
+  }, [currentGuess, userChoice, onGameOver]);
+
+  const nextGuessHandler = (direction) => {
+    if (
+      (direction === 'lower' && currentGuess < props.userChoice) ||
+      (direction === 'greater' && currentGuess > props.userChoice)
+    ) {
+      Alert.alert('Dont Lie!!', 'You know that this is wrong', [
+        {text: 'Sorry', style: 'cancel'},
+      ]);
+
+      return;
+    }
+
+    if (direction === 'lower') {
+      currentHigh.current = currentGuess;
+    } else {
+      currentLow.current = currentGuess;
+    }
+
+    const nextNumber = generateRandomBetween(
+      currentLow.current,
+      currentHigh.current,
+      currentGuess,
+    );
+
+    setCurrentGuess(nextNumber);
+    setRounds((numberOfRounds) => numberOfRounds + 1);
+  };
+
   return (
     <View style={styles.screen}>
       <Text>Opponent's Guess</Text>
@@ -28,13 +71,13 @@ const GameScreen = (props) => {
         <Button
           title="LOWER"
           onPress={() => {
-            console.log('Lower');
+            nextGuessHandler('lower');
           }}
         />
         <Button
           title="GREATER"
           onPress={() => {
-            console.log('Greater');
+            nextGuessHandler('greater');
           }}
         />
       </Card>

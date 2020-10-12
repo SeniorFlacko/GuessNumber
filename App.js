@@ -20,18 +20,40 @@ import {
 import Header from './components/Header';
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
+import GameOverScreen from './screens/GameOverScreen';
 
 const App: () => React$Node = () => {
   const [numberSelected, setNumberSelected] = useState();
+  const [numberOfRounds, setNumberOfRounds] = useState(0);
 
   const numberSelectedHandler = (choosenNumber) => {
     setNumberSelected(choosenNumber);
+    setNumberOfRounds(0);
+  };
+
+  const gameOverHandler = (roundsNumber) => {
+    setNumberOfRounds(roundsNumber);
+  };
+
+  const restartHandler = () => {
+    setNumberOfRounds(0);
+    setNumberSelected(null);
   };
 
   let content = <StartGameScreen onChoosenNumber={numberSelectedHandler} />;
 
-  if (numberSelected) {
-    content = <GameScreen userChoice={numberSelected} />;
+  if (numberSelected && numberOfRounds <= 0) {
+    content = (
+      <GameScreen userChoice={numberSelected} onGameOver={gameOverHandler} />
+    );
+  } else if (numberOfRounds > 0) {
+    content = (
+      <GameOverScreen
+        numberOfRounds={numberOfRounds}
+        selectedNumber={numberSelected}
+        onRestart={restartHandler}
+      />
+    );
   }
 
   return (
