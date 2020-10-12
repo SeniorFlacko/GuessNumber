@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -19,12 +19,25 @@ import {
 
 import Header from './components/Header';
 import StartGameScreen from './screens/StartGameScreen';
+import GameScreen from './screens/GameScreen';
 
 const App: () => React$Node = () => {
+  const [numberSelected, setNumberSelected] = useState();
+
+  const numberSelectedHandler = (choosenNumber) => {
+    setNumberSelected(choosenNumber);
+  };
+
+  let content = <StartGameScreen onChoosenNumber={numberSelectedHandler} />;
+
+  if (numberSelected) {
+    content = <GameScreen userChoice={numberSelected} />;
+  }
+
   return (
     <View styles={styles.screen}>
       <Header title="Guess A Number" />
-      <StartGameScreen />
+      {content}
     </View>
   );
 };
