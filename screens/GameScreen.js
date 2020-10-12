@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {View, StyleSheet, Button, Text, Alert, ScrollView} from 'react-native';
+import {View, StyleSheet, Text, Alert, ScrollView} from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import MainButton from '../components/MainButton';
@@ -19,9 +19,9 @@ const generateRandomBetween = (min, max, exclude) => {
 
 const renderListItem = (value, numOfRound) => {
   return (
-    <View key={value} style={styles.listItem}>
-      <Text>#{numOfRound}</Text>
-      <Text>{value}</Text>
+    <View key={value} style={styles.listItemContainer}>
+      <Text style={styles.listItem}>#{numOfRound}</Text>
+      <Text style={styles.listItem}>{value}</Text>
     </View>
   );
 };
@@ -89,8 +89,8 @@ const GameScreen = (props) => {
           GREATER
         </MainButton>
       </Card>
-      <View style={styles.list}>
-        <ScrollView>
+      <View style={styles.listContainer}>
+        <ScrollView contentContainerStyle={styles.list}>
           {pastGuesses.map((guess, index) =>
             renderListItem(guess, pastGuesses.length - index),
           )}
@@ -112,7 +112,14 @@ const styles = StyleSheet.create({
     width: 300,
     maxWidth: '80%',
   },
-  listItem: {
+  listContainer: {
+    width: '60%',
+  },
+  list: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  listItemContainer: {
     flexDirection: 'row',
     borderColor: '#CCC',
     borderWidth: 1,
@@ -121,8 +128,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'space-between',
   },
-  list: {
-    width: '60%',
+  listItem: {
+    marginHorizontal: 4,
   },
 });
 
