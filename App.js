@@ -57,10 +57,10 @@ const App: () => React$Node = () => {
   }
 
   return (
-    <View styles={styles.screen}>
+    <SafeAreaView styles={styles.screen}>
       <Header title="Guess A Number" />
       {content}
-    </View>
+    </SafeAreaView>
   );
 };
 
