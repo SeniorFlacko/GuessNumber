@@ -14,17 +14,22 @@ import MainButton from '../components/MainButton';
 const GameOverScreen = (props) => {
   return (
     <SafeAreaView style={styles.screen}>
-      <View style={{alignItems: 'center'}}>
-        <Text>The game is Over!!</Text>
-      </View>
-      <View style={styles.imageContainer}>
-        <Image source={require('../assets/success.png')} style={styles.image} />
-      </View>
-      <View style={styles.resultContainer}>
-        <Text>Number of rounds: {props.numberOfRounds}</Text>
-        <Text>Number was: {props.selectedNumber} </Text>
-        <MainButton onPress={props.onRestart}>NEW GAME</MainButton>
-      </View>
+      <ScrollView>
+        <View style={{alignItems: 'center'}}>
+          <Text>The game is Over!!</Text>
+        </View>
+        <View style={styles.imageContainer}>
+          <Image
+            source={require('../assets/success.png')}
+            style={styles.image}
+          />
+        </View>
+        <View style={styles.resultContainer}>
+          <Text>Number of rounds: {props.numberOfRounds}</Text>
+          <Text>Number was: {props.selectedNumber} </Text>
+          <MainButton onPress={props.onRestart}>NEW GAME</MainButton>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

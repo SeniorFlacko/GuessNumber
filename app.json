@@ -1,4 +1,5 @@
 {
   "name": "GuessNumber",
-  "displayName": "GuessNumber"
+  "displayName": "GuessNumber",
+  "orentation": "default"
 }
