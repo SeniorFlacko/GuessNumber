@@ -6,6 +6,7 @@ import {
   Alert,
   ScrollView,
   FlatList,
+  Dimensions,
 } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
@@ -81,25 +82,33 @@ const GameScreen = (props) => {
     ]);
   };
 
+  let listContainerStyle = styles.listContainer;
+
+  if (Dimensions.get('window').width < 350) {
+    listContainerStyle = styles.listContainerBig;
+  }
+
   return (
     <View style={styles.screen}>
       <Text>Opponent's Guess</Text>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card style={styles.buttonContainer}>
         <MainButton
+          style={styles.mainButton}
           onPress={() => {
             nextGuessHandler('lower');
           }}>
-          LOWER
+          -
         </MainButton>
         <MainButton
+          style={styles.mainButton}
           onPress={() => {
             nextGuessHandler('greater');
           }}>
-          GREATER
+          +
         </MainButton>
       </Card>
-      <View style={styles.listContainer}>
+      <View style={listContainerStyle}>
         <FlatList
           keyExtractor={(item) => item}
           data={pastGuesses}
@@ -118,12 +127,14 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 20,
-    width: 300,
-    maxWidth: '80%',
+    marginTop: Dimensions.get('window').height > 600 ? 30 : 10,
+    width: '80%',
   },
   listContainer: {
     width: '60%',
+  },
+  listContainerBig: {
+    width: '80%',
   },
   list: {
     justifyContent: 'center',
