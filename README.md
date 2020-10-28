@@ -1,3 +1,3 @@
 # GuessNumber
 
-<!-- ![Alt Text](https://github.com/SeniorFlacko/MealsApp/blob/main/mealApp.gif) -->
+![Alt Text](https://github.com/SeniorFlacko/GuessNumber/blob/main/guessNumberDemo.gif)
